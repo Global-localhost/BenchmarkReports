@@ -8,50 +8,47 @@
 
 *Tag Predicate:* `ALL`
 
-## Error
+## Results
 
-The build could not finish due to an error:
+*Note: If Chrome is your browser, I strongly recommend installing the [Wide GitHub](https://chrome.google.com/webstore/detail/wide-github/kaalofacklcidaampbokdplbklpeldpj?hl=en)
+extension, which makes the result table easier to read.*
+
+Below is a table of this job's results, obtained by running the benchmarks found in
+[JuliaCI/BaseBenchmarks.jl](https://github.com/JuliaCI/BaseBenchmarks.jl). The values
+listed in the `ID` column have the structure `[parent_group, child_group, ..., key]`,
+and can be used to index into the BaseBenchmarks suite to retrieve the corresponding
+benchmarks.
+
+The percentages accompanying time and memory values in the below table are noise tolerances. The "true"
+time/memory value for a given benchmark is expected to fall within this percentage of the reported value.
+
+A ratio greater than `1.0` denotes a possible regression (marked with :x:), while a ratio less
+than `1.0` denotes a possible improvement (marked with :white_check_mark:). Only significant results - results
+that indicate possible regressions or improvements - are shown below (thus, an empty table means that all
+benchmark results remained invariant between builds).
+
+| ID | time ratio | memory ratio |
+|----|------------|--------------|
+| `["gdemo", "hmc"]` | 1.06 (5%) :x: | 1.00 (1%)  |
+
+## Benchmark Group List
+
+Here's a list of all the benchmark groups executed by this job:
+
+- `["dummy"]`
+- `["gdemo"]`
+- `["mnormal"]`
+
+## Version Info
+
+#### Primary Build
 
 ```
-NanosoldierError: failed to run benchmarks against primary commit: failed process: Process(`/opt/hostedtoolcache/julia/1.3.1/x64/bin/julia --project -e 'using Pkg;
-pkg"instantiate; add JSON GitHub DataFrames BenchmarkTools;"
-Pkg.build(verbose=true)
-push!(LOAD_PATH, joinpath(".", "benchmarks"))
-using BenchmarkTools
-using BenchmarkHelper
-BenchmarkHelper.set_benchmark_info("f5aa2986551f66ce7c57f282f5260031e375df01_primary", "f5aa2986551f66ce7c57f282f5260031e375df01_primary")
-for bm in BenchmarkHelper.benchmark_files()
-    include(joinpath("benchmarks", bm))
-end
-
-benchmarks = BenchmarkHelper.BenchmarkSuite[@tagged(ALL)]
-println("WARMING UP BENCHMARKS...")
-warmup(benchmarks)
-
-println("RUNNING BENCHMARKS...")
-results = run(benchmarks; verbose=true)
-
-println("SAVING RESULT...")
-BenchmarkTools.save("/home/runner/test_workdir/tmpresults/data/f5aa2986551f66ce7c57f282f5260031e375df01_primary.json", results)
-
-println("DONE!")
-
-'`, ProcessExited(1)) [1]
-
-Stacktrace:
- [1] pipeline_error at ./process.jl:525 [inlined]
- [2] #run#565(::Bool, ::typeof(run), ::Cmd) at ./process.jl:440
- [3] run at ./process.jl:438 [inlined]
- [4] execute_benchmarks!(::Nanosoldier.BenchmarkJob, ::Symbol) at /home/runner/work/Turing.jl/Turing.jl/Nanosoldier.jl/src/jobs/BenchmarkJob.jl:520
- [5] run(::Nanosoldier.BenchmarkJob) at /home/runner/work/Turing.jl/Turing.jl/Nanosoldier.jl/src/jobs/BenchmarkJob.jl:197
- [6] run_as_github_action(::Nanosoldier.Server) at /home/runner/work/Turing.jl/Turing.jl/Nanosoldier.jl/src/server.jl:113
- [7] top-level scope at /home/runner/work/Turing.jl/Turing.jl/Nanosoldier.jl/bin/turing_benchmark.jl:31
- [8] include at ./boot.jl:328 [inlined]
- [9] include_relative(::Module, ::String) at ./loading.jl:1105
- [10] include(::Module, ::String) at ./Base.jl:31
- [11] exec_options(::Base.JLOptions) at ./client.jl:287
- [12] _start() at ./client.jl:460
+f5aa2986551f66ce7c57f282f5260031e375df01
 ```
 
-Check the logs folder in this directory for more detailed output.
+#### Comparison Build
 
+```
+b1d69e0db225542c0370b6b8f171bfae33b82048
+```
